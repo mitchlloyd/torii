@@ -6,7 +6,6 @@ import configuration from 'torii/configuration';
 var DEFAULT_REMOTE_SERVICE_NAME = 'popup';
 
 var computed = Ember.computed;
-var get      = Ember.get;
 
 /**
  * The base class for all torii providers
