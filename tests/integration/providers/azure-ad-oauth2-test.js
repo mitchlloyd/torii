@@ -1,14 +1,12 @@
 var torii, app;
 
-import configuration from 'torii/configuration';
-import MockPopup from 'test/helpers/mock-popup';
-import startApp from 'test/helpers/start-app';
-import lookup from 'test/helpers/lookup';
+import { configure } from 'torii/configuration';
+import MockPopup from '../../helpers/mock-popup';
+import startApp from '../../helpers/start-app';
+import lookup from '../../helpers/lookup';
 import QUnit from 'qunit';
 
 const { module, test } = QUnit;
-
-var originalConfiguration = configuration.providers['azure-ad-oauth2'];
 
 var mockPopup = new MockPopup();
 
@@ -22,12 +20,17 @@ module('AzureAd - Integration', {
     app.inject('torii-provider', 'popup', 'torii-service:mock-popup');
 
     torii = lookup(app, "service:torii");
-    configuration.providers['azure-ad-oauth2'] = { apiKey: 'dummy' };
+    configure({
+      providers: {
+        'azure-ad-oauth2': {
+          apiKey: 'dummy'
+        }
+      }
+    });
   },
 
   teardown: function(){
     mockPopup.opened = false;
-    configuration.providers['azure-ad-oauth2'] = originalConfiguration;
     Ember.run(app, 'destroy');
   }
 });

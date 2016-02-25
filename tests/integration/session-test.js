@@ -1,11 +1,11 @@
 var session, user, adapter, app;
 
 import SessionService from 'torii/services/torii-session';
-import DummyAdapter from 'test/helpers/dummy-adapter';
-import DummySuccessProvider from 'test/helpers/dummy-success-provider';
-import DummyFailureProvider from 'test/helpers/dummy-failure-provider';
-import startApp from 'test/helpers/start-app';
-import lookup from 'test/helpers/lookup';
+import DummyAdapter from '../helpers/dummy-adapter';
+import DummySuccessProvider from '../helpers/dummy-success-provider';
+import DummyFailureProvider from '../helpers/dummy-failure-provider';
+import startApp from '../helpers/start-app';
+import lookup from '../helpers/lookup';
 import QUnit from 'qunit';
 
 
@@ -61,7 +61,7 @@ test("failed auth sets isAuthenticated to false, sets error", function(assert){
   Ember.run(function(){
     session.open('dummy-failure').then(function(){
       assert.ok(false, 'should not resolve promise');
-    }, function(err){
+    }, function(){
       assert.ok(true, 'rejects promise');
 
       assert.ok(!session.get('isOpening'), 'session is no longer opening');

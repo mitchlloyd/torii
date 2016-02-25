@@ -1,6 +1,6 @@
-import startApp from 'test/helpers/start-app';
-import configuration from 'torii/configuration';
-import lookup from 'test/helpers/lookup';
+import startApp from '../helpers/start-app';
+import configuration from '../../config/environment';
+import lookup from '../helpers/lookup';
 import QUnit from 'qunit';
 
 const { module, test } = QUnit;
@@ -9,17 +9,18 @@ function lookupFactory(app, key) {
   return app.__container__.lookupFactory(key);
 }
 
+let toriiConfiguration = configuration.torii;
 var app, originalSessionServiceName;
 
 module('Ember Initialization - Acceptance', {
   setup: function(){
-    originalSessionServiceName = configuration.sessionServiceName;
-    delete configuration.sessionServiceName;
+    originalSessionServiceName = toriiConfiguration.sessionServiceName;
+    delete toriiConfiguration.sessionServiceName;
   },
 
   teardown: function(){
     Ember.run(app, 'destroy');
-    configuration.sessionServiceName = originalSessionServiceName;
+    toriiConfiguration.sessionServiceName = originalSessionServiceName;
   }
 });
 
@@ -33,7 +34,7 @@ test('session is not injected by default', function(assert){
 });
 
 test('session is injected with the name in the configuration', function(assert){
-  configuration.sessionServiceName = 'wackySessionName';
+  toriiConfiguration.sessionServiceName = 'wackySessionName';
 
   app = startApp({loadInitializers: true});
   assert.ok(lookup(app, 'service:wackySessionName'), 'service:wackySessionName is injected');
@@ -49,7 +50,7 @@ test('session is injected with the name in the configuration', function(assert){
 });
 
 test('session is injectable using inject.service', function(assert){
-  configuration.sessionServiceName = 'session';
+  toriiConfiguration.sessionServiceName = 'session';
 
   app = startApp({loadInitializers: true});
   assert.ok(lookup(app, 'service:session'), 'service:session is injected');

@@ -1,4 +1,4 @@
-import initializeTorii from 'test/helpers/initialize-torii';
+import initializeTorii from '../helpers/initialize-torii';
 
 function startApp(attrs) {
   var App;

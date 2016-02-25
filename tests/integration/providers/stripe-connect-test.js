@@ -1,14 +1,12 @@
-import configuration from 'torii/configuration';
-import MockPopup from 'test/helpers/mock-popup';
-import startApp from 'test/helpers/start-app';
-import lookup from 'test/helpers/lookup';
+import { configure } from 'torii/configuration';
+import MockPopup from '../../helpers/mock-popup';
+import startApp from '../../helpers/start-app';
+import lookup from '../../helpers/lookup';
 import QUnit from 'qunit';
 
 const { module, test } = QUnit;
 
 var torii, app;
-
-var originalConfiguration = configuration.providers['stripe-connect'];
 
 var mockPopup = new MockPopup();
 
@@ -22,11 +20,14 @@ module('Stripe Connect - Integration', {
     app.inject('torii-provider', 'popup', 'torii-service:mock-popup');
 
     torii = lookup(app, "service:torii");
-    configuration.providers['stripe-connect'] = {apiKey: 'dummy'};
+    configure({
+      providers: {
+        'stripe-connect': { apiKey: 'dummy' }
+      }
+    });
   },
   teardown: function(){
     mockPopup.opened = false;
-    configuration.providers['stripe-connect'] = originalConfiguration;
     Ember.run(app, 'destroy');
   }
 });

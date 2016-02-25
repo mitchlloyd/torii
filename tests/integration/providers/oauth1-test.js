@@ -1,7 +1,7 @@
 import OAuth1Provider from 'torii/providers/oauth1';
-import configuration from 'torii/configuration';
-import startApp from 'test/helpers/start-app';
-import lookup from 'test/helpers/lookup';
+import { configure } from 'torii/configuration';
+import startApp from '../../helpers/start-app';
+import lookup from '../../helpers/lookup';
 import QUnit from 'qunit';
 
 const { module, test } = QUnit;
@@ -18,7 +18,6 @@ var opened, openedUrl, mockPopup = {
 
 var requestTokenUri = 'http://localhost:3000/oauth/callback';
 var providerName = 'oauth1';
-var originalConfiguration = configuration.providers[providerName];
 
 module('Oauth1 - Integration', {
   setup: function(){
@@ -29,11 +28,16 @@ module('Oauth1 - Integration', {
     app.register('torii-provider:'+providerName, OAuth1Provider);
 
     torii = lookup(app, "service:torii");
-    configuration.providers[providerName] = {requestTokenUri: requestTokenUri};
+    configure({
+      providers: {
+        [providerName]: {
+          requestTokenUri: requestTokenUri
+        }
+      }
+    });
   },
   teardown: function(){
     opened = false;
-    configuration.providers[providerName] = originalConfiguration;
     Ember.run(app, 'destroy');
   }
 });

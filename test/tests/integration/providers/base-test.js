@@ -2,9 +2,9 @@ import configuration from 'torii/configuration';
 import BaseProvider from 'torii/providers/base';
 import PopupService from 'torii/services/popup';
 import IframeService from 'torii/services/iframe';
-import startApp from 'test/helpers/start-app';
+import startApp from '../helpers/start-app';
 import configuration from 'torii/configuration';
-import lookup from 'test/helpers/lookup';
+import lookup from '../helpers/lookup';
 
 var ProviderSubclass = BaseProvider.extend({
   name: 'base-subclass-name'

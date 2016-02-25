@@ -1,13 +1,11 @@
 var torii, app;
 
-import startApp from 'test/helpers/start-app';
-import lookup from 'test/helpers/lookup';
-import configuration from 'torii/configuration';
+import startApp from '../../helpers/start-app';
+import lookup from '../../helpers/lookup';
+import { configure } from 'torii/configuration';
 import QUnit from 'qunit';
 
 const { module, test } = QUnit;
-
-var originalConfiguration = configuration.providers['edmodo-connect'];
 
 var opened, mockPopup;
 
@@ -24,14 +22,18 @@ module('Edmodo Connect - Integration', {
     app.inject('torii-provider', 'popup', 'torii-service:mock-popup');
 
     torii = lookup(app, "service:torii");
-    configuration.providers['edmodo-connect'] = {
-      apiKey: 'dummy',
-      redirectUri: 'some url'
-    };
+
+    configure({
+      providers: {
+        'edmodo-connect': {
+          apiKey: 'dummy',
+          redirectUri: 'some url'
+        }
+      }
+    });
   },
   teardown: function(){
     opened = false;
-    configuration.providers['edmodo-connect'] = originalConfiguration;
     Ember.run(app, 'destroy');
   }
 });

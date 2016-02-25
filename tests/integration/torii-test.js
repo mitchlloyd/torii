@@ -1,9 +1,9 @@
 var torii, app;
 
-import DummySuccessProvider from 'test/helpers/dummy-success-provider';
-import DummyFailureProvider from 'test/helpers/dummy-failure-provider';
-import startApp from 'test/helpers/start-app';
-import lookup from 'test/helpers/lookup';
+import DummySuccessProvider from '../helpers/dummy-success-provider';
+import DummyFailureProvider from '../helpers/dummy-failure-provider';
+import startApp from '../helpers/start-app';
+import lookup from '../helpers/lookup';
 import QUnit from 'qunit';
 
 let { module, test } = QUnit;
